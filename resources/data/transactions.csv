@@ -1,0 +1,9 @@
+transaction_id,date,amount,status,description
+TXN10001,2026-09-20,1250.00,completed,Wire transfer to Alice Martin
+TXN10002,2026-09-22,89.99,completed,Card purchase - Amazon
+TXN10003,2026-09-25,500.00,pending,International transfer to Germany
+TXN10004,2026-09-26,45.00,declined,ATM withdrawal - insufficient funds
+TXN10005,2026-09-27,3200.00,completed,Payroll deposit
+TXN10006,2026-09-28,15.00,completed,Domestic wire fee
+TXN10007,2026-09-28,220.50,pending,Card purchase - pending merchant confirmation
+TXN10008,2026-09-29,1000.00,flagged,Transfer flagged for fraud review

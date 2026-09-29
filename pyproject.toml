@@ -1,0 +1,36 @@
+[project]
+name = "finsolve-voice-agent"
+version = "0.1.0"
+description = "Voice AI agent (STT -> LLM -> RAG -> TTS) for FinSolve customer support"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chromadb>=1.5.9",
+    "fastapi[standard]>=0.115.12",
+    "groq>=1.7.0",
+    "ollama>=0.6.2",
+    "pandas>=2.3.3",
+    "python-dotenv>=1.2.3",
+    "sentence-transformers>=6.1.0",
+    "torch>=2.14.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+# Same fix as ds-rpc-01: torch's default Linux wheel pulls several GB of
+# unused NVIDIA CUDA packages. CPU-only index avoids that entirely.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
