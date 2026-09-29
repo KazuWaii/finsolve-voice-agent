@@ -1,0 +1,10 @@
+.venv
+.git
+__pycache__
+*.py[oc]
+.env
+logs/
+resources/vectorstore/
+tests/
+.python-version
+README.md
