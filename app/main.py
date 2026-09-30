@@ -9,7 +9,15 @@ from app.rag import answer_faq
 from app.tools import lookup_transaction, schedule_callback as schedule_callback_tool
 from app.agent import run_agent
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 app = FastAPI(title="FinSolve Voice Agent Tools")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://kazuwaii.github.io"],
+    allow_methods=["GET"],
+)
 
 
 class FaqRequest(BaseModel):
