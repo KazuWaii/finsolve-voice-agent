@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FinSolve Voice Agent — Demo</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 640px;
+      margin: 80px auto;
+      padding: 0 24px;
+      color: #1a1a1a;
+    }
+    h1 { font-size: 1.5rem; }
+    p { color: #555; line-height: 1.5; }
+    code {
+      background: #f2f2f2;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>FinSolve Voice Agent — Demo</h1>
+  <p>
+    Click the call button in the bottom-right corner to talk to FinSolve's
+    customer support voice agent. Ask about business hours, a transaction
+    (try <code>TXN10005</code>), or request a callback.
+  </p>
+  <p>
+    Note: the backend runs on a scale-to-zero container. If it has been idle,
+    the first response may be slow or time out while it cold-starts.
+  </p>
+
+  <elevenlabs-convai agent-id="agent_7701m3snz3jyfnptfjd05bew1mxv"></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+</html>
