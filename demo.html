@@ -18,6 +18,18 @@
       padding: 2px 6px;
       border-radius: 4px;
     }
+    #warmup-status {
+      margin: 16px 0;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #fff3cd;
+      color: #856404;
+    }
+    #warmup-status.ready {
+      background: #d4edda;
+      color: #155724;
+    }
   </style>
 </head>
 <body>
@@ -27,12 +39,31 @@
     customer support voice agent. Ask about business hours, a transaction
     (try <code>TXN10005</code>), or request a callback.
   </p>
-  <p>
-    Note: the backend runs on a scale-to-zero container. If it has been idle,
-    the first response may be slow or time out while it cold-starts.
-  </p>
+
+  <div id="warmup-status">Warming up the backend…</div>
 
   <elevenlabs-convai agent-id="agent_7701m3snz3jyfnptfjd05bew1mxv"></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+  <script>
+    const HEALTH_URL = "https://finsolve-voice-agent-api.blackhill-3f2c9dd4.eastus.azurecontainerapps.io/health";
+    const statusEl = document.getElementById("warmup-status");
+
+    async function warmUp() {
+      try {
+        const res = await fetch(HEALTH_URL);
+        if (res.ok) {
+          statusEl.textContent = "Backend is ready — go ahead and start a call.";
+          statusEl.classList.add("ready");
+          return;
+        }
+      } catch (e) {
+        // Container still starting up, or a network hiccup -- just retry.
+      }
+      setTimeout(warmUp, 3000);
+    }
+
+    warmUp();
+  </script>
 </body>
 </html>
