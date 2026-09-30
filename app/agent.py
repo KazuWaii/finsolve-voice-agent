@@ -2,6 +2,7 @@ from typing import TypedDict
 import re
 import json
 
+from langgraph.graph import StateGraph, END
 from app.llm import chat
 from app.rag import answer_faq
 from app.tools import lookup_transaction
@@ -74,3 +75,31 @@ def handle_fallback(state):
     return {
         "answer": "I can help with account questions, transaction status, or scheduling a callback. Could you rephrase your question?"
     }
+
+def route_by_intent(state):
+    return state["intent"]
+
+graph = StateGraph(AgentState)
+graph.add_node("classify", classify_intent)
+graph.add_node("faq", handle_faq)
+graph.add_node("transaction_status", handle_transaction)
+graph.add_node("schedule_callback", handle_callback)
+graph.add_node("other", handle_fallback)
+
+graph.set_entry_point("classify")
+graph.add_conditional_edges("classify", route_by_intent, {
+    "faq": "faq",
+    "transaction_status": "transaction_status",
+    "schedule_callback": "schedule_callback",
+    "other": "other",
+})
+graph.add_edge("faq", END)
+graph.add_edge("transaction_status", END)
+graph.add_edge("schedule_callback", END)
+graph.add_edge("other", END)
+
+compiled_agent = graph.compile()
+
+def run_agent(message):
+    result = compiled_agent.invoke({"message": message, "intent": "", "answer": ""})
+    return result["answer"]
